@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class LightSwitch : MonoBehaviour
 {
+    [SerializeField] private bool _active = false;
     private Animator _switchAnim;
     private bool _switchOn = false;
-    private int _ID;
 
     [SerializeField] UnityEvent _onFlip;
 
@@ -15,7 +15,6 @@ public class LightSwitch : MonoBehaviour
     void Start()
     {
         _switchAnim = GetComponent<Animator>();
-        _ID = Animator.StringToHash(_switchAnim.parameters[0].name);
     }
 
     public void FlipSwitch()
@@ -23,12 +22,17 @@ public class LightSwitch : MonoBehaviour
         _switchOn = !_switchOn;
         _switchAnim.SetBool(_switchAnim.parameters[0].name, _switchOn);
 
-        if (_switchOn)
+        if (_switchOn && _active)
             _onFlip.Invoke();
     }
 
     public void Flipped()
     {
         
+    }
+
+    public void ActivateSwitch()
+    {
+        _active = true;
     }
 }
