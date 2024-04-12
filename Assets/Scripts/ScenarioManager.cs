@@ -20,6 +20,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] UnityEvent _allNailsRemoved;
     [SerializeField] UnityEvent _incorrectCombination;
 
+    [SerializeField] private Transform _chair;
     private int _nailsRemoved = 0;
     private bool _outageReady = true;
 
@@ -42,7 +43,14 @@ public class ScenarioManager : MonoBehaviour
         if (_outageReady)
         {
             _incorrectCombination.Invoke();
+            SetChair();
             _outageReady = false;
         }
+    }
+
+    private void SetChair()
+    {
+        _chair.position = new Vector3(-0.055f, -0.009f, 1.633f);
+        _chair.eulerAngles = new Vector3(-0.047f, 180, 0);
     }
 }
