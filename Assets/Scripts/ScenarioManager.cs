@@ -18,8 +18,10 @@ public class ScenarioManager : MonoBehaviour
     }
 
     [SerializeField] UnityEvent _allNailsRemoved;
+    [SerializeField] UnityEvent _incorrectCombination;
 
     private int _nailsRemoved = 0;
+    private bool _outageReady = true;
 
     private void Awake()
     {
@@ -33,5 +35,14 @@ public class ScenarioManager : MonoBehaviour
 
         if (_nailsRemoved >= 2)
             _allNailsRemoved.Invoke();
+    }
+
+    public void IncorrectCombo()
+    {
+        if (_outageReady)
+        {
+            _incorrectCombination.Invoke();
+            _outageReady = false;
+        }
     }
 }

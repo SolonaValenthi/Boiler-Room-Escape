@@ -56,12 +56,15 @@ public class FrameLock : MonoBehaviour
 
     private bool CheckCode()
     {
-        if (_enteredCode.Length == _lockCode.Length)
+        if (_enteredCode[0] != 0 && _enteredCode[1] != 0 && _enteredCode[2] != 0)
         {
             for(int i = 0;  i < _enteredCode.Length; i++)
             {
                 if (_enteredCode[i] != _lockCode[i])
+                {
+                    ScenarioManager.Instance.IncorrectCombo();
                     return false;
+                }
             }
             return true;
         }

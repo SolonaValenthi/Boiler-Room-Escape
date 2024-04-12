@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class LightSwitch : MonoBehaviour
 {
     [SerializeField] private bool _active = false;
+    [SerializeField] private bool _startOn = false;
     private Animator _switchAnim;
     private bool _switchOn = false;
 
@@ -15,6 +16,9 @@ public class LightSwitch : MonoBehaviour
     void Start()
     {
         _switchAnim = GetComponent<Animator>();
+
+        if (_startOn)
+            FlipSwitch();
     }
 
     public void FlipSwitch()
