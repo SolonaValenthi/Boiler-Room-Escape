@@ -7,6 +7,7 @@ TagManager:
   - Nail
   - Right Control
   - Left Control
+  - Chains
   layers:
   - Default
   - TransparentFX

@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class Chains : MonoBehaviour
 {
-    [SerializeField] private XRSocketInteractor _socketInteractor;
-    [SerializeField] private SphereCollider _socketTrigger;
+    [SerializeField] private SphereCollider _triggerVolume;
 
     private int _unlocked;
 
@@ -14,8 +12,7 @@ public class Chains : MonoBehaviour
     void Start()
     {
         _unlocked = 0;
-        _socketInteractor.enabled = false;
-        _socketTrigger.enabled = false;
+        _triggerVolume.enabled = false;
     }
 
     public void Unlocked()
@@ -24,8 +21,7 @@ public class Chains : MonoBehaviour
 
         if (_unlocked >= 2)
         {
-            _socketInteractor.enabled = true;
-            _socketTrigger.enabled = true;
+            _triggerVolume.enabled = true;
         }   
     }
 }
