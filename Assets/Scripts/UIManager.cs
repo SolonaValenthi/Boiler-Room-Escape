@@ -11,21 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject[] _menuInteractors;
 
-    [Space]
-    [Header("Movement Providers")]
-
-    [SerializeField] ActionBasedContinuousTurnProvider _continuousTurn;
-    [SerializeField] ActionBasedSnapTurnProvider _snapTurn;
-    [SerializeField] ActionBasedContinuousMoveProvider _continuousMovement;
-
-    private enum TurningMode
-    {
-        Continuous,
-        Snap
-    }
-    
     private bool _menuOpen = false;
-    private TurningMode _currentProvider = TurningMode.Continuous;
 
     // Start is called before the first frame update
     void Start()
@@ -47,23 +33,6 @@ public class UIManager : MonoBehaviour
             openMenuAction.performed += OpenMenu;
     }
 
-    private void EnableMovement()
-    {
-        _continuousMovement.enabled = true;
-
-        if (_currentProvider == TurningMode.Continuous)
-            _continuousTurn.enabled = true;
-        else
-            _snapTurn.enabled = true;
-    }
-
-    private void DisableMovement()
-    {
-        _continuousMovement.enabled = false;
-        _continuousTurn.enabled = false;
-        _snapTurn.enabled = false;
-    }
-
     private void OpenMenu(InputAction.CallbackContext context)
     {
         if (!_menuOpen)
@@ -74,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     private void DisplayMenu()
     {
-        DisableMovement();
+        ScenarioManager.Instance.DisableMovement();
         _menuOpen = true;
         _menuCanvas.SetActive(true);
         _mainMenu.SetActive(true);
@@ -87,7 +56,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseMenu()
     {
-        EnableMovement();
+        ScenarioManager.Instance.EnableMovement();
         _menuOpen = false;
         _menuCanvas.SetActive(false);
 

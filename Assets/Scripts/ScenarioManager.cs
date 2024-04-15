@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class ScenarioManager : MonoBehaviour
 {
@@ -21,8 +22,23 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] UnityEvent _incorrectCombination;
 
     [SerializeField] private Transform _chair;
+
+    [Space]
+    [Header("Movement Providers")]
+
+    [SerializeField] ActionBasedContinuousTurnProvider _continuousTurn;
+    [SerializeField] ActionBasedSnapTurnProvider _snapTurn;
+    [SerializeField] ActionBasedContinuousMoveProvider _continuousMovement;
+
+    private enum TurningMode
+    {
+        Continuous,
+        Snap
+    }
+
     private int _nailsRemoved = 0;
     private bool _outageReady = true;
+    private TurningMode _currentProvider = TurningMode.Continuous;
 
     private void Awake()
     {
@@ -46,6 +62,23 @@ public class ScenarioManager : MonoBehaviour
             SetChair();
             _outageReady = false;
         }
+    }
+
+    public void EnableMovement()
+    {
+        _continuousMovement.enabled = true;
+
+        if (_currentProvider == TurningMode.Continuous)
+            _continuousTurn.enabled = true;
+        else
+            _snapTurn.enabled = true;
+    }
+
+    public void DisableMovement()
+    {
+        _continuousMovement.enabled = false;
+        _continuousTurn.enabled = false;
+        _snapTurn.enabled = false;
     }
 
     private void SetChair()
