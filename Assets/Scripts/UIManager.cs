@@ -1,17 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager _instance;
+    public static UIManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                Debug.LogError("No scenario manager found");
+
+            return _instance;
+        }
+    }
+
     [SerializeField] InputActionReference _openMenu;
     [SerializeField] private GameObject _menuCanvas;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject[] _menuInteractors;
+    [SerializeField] private GameObject _contTurnSettings;
+    [SerializeField] private GameObject _snapTurnSettings;
+    [SerializeField] private TMP_Text _turnMode;
+    [SerializeField] private TMP_Text _contTurnSpeed;
+    [SerializeField] private Slider _speedSlider;
+    [SerializeField] private TMP_Dropdown _amountDropdown;
 
     private bool _menuOpen = false;
+    
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +88,56 @@ public class UIManager : MonoBehaviour
         foreach (var interactor in _menuInteractors)
         {
             interactor.SetActive(false);
+        }
+    }
+
+    public void SwitchTurnMode()
+    {
+        if (ScenarioManager.Instance._currentProvider == ScenarioManager.TurningMode.Continuous)
+        {
+            _turnMode.text = "Continuous";
+            _contTurnSettings.SetActive(true);
+            _snapTurnSettings.SetActive(false);
+        }
+        else
+        {
+            _turnMode.text = "Snap";
+            _contTurnSettings.SetActive(false);
+            _snapTurnSettings.SetActive(true);
+        }
+    }
+
+    public void SetTurnSpeed()
+    {
+        _contTurnSpeed.text = $"{_speedSlider.value}";
+        ScenarioManager.Instance.SetTurnSpeed(_speedSlider.value);
+    }
+
+    public void SetTurnAmount()
+    {
+        switch (_amountDropdown.value)
+        {
+            case 0:
+                ScenarioManager.Instance.SetTurnAmount(15);
+                break;
+            case 1:
+                ScenarioManager.Instance.SetTurnAmount(30);
+                break;
+            case 2:
+                ScenarioManager.Instance.SetTurnAmount(45);
+                break;
+            case 3:
+                ScenarioManager.Instance.SetTurnAmount(60);
+                break;
+            case 4:
+                ScenarioManager.Instance.SetTurnAmount(75);
+                break;
+            case 5:
+                ScenarioManager.Instance.SetTurnAmount(90);
+                break;
+            default:
+                Debug.LogError("Invalid dropdown item selected");
+                break;
         }
     }
 

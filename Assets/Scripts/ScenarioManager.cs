@@ -30,7 +30,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] ActionBasedSnapTurnProvider _snapTurn;
     [SerializeField] ActionBasedContinuousMoveProvider _continuousMovement;
 
-    private enum TurningMode
+    public enum TurningMode
     {
         Continuous,
         Snap
@@ -38,12 +38,19 @@ public class ScenarioManager : MonoBehaviour
 
     private int _nailsRemoved = 0;
     private bool _outageReady = true;
-    private TurningMode _currentProvider = TurningMode.Continuous;
+    private float _contTurnSpeed = 60;
+    private int _snapTurnAmount = 45;
+    public TurningMode _currentProvider { get; private set; } = TurningMode.Continuous;
 
     private void Awake()
     {
         _instance = this;
         _nailsRemoved = 0;
+    }
+
+    void Start()
+    {
+        EnableMovement();
     }
 
     public void RemoveNail()
@@ -69,16 +76,42 @@ public class ScenarioManager : MonoBehaviour
         _continuousMovement.enabled = true;
 
         if (_currentProvider == TurningMode.Continuous)
-            _continuousTurn.enabled = true;
+        {
+            _continuousTurn.turnSpeed = _contTurnSpeed;
+            _snapTurn.turnAmount = 0;
+        }
         else
-            _snapTurn.enabled = true;
+        {
+            _continuousTurn.turnSpeed = 0;
+            _snapTurn.turnAmount = _snapTurnAmount;
+        }
     }
 
     public void DisableMovement()
     {
         _continuousMovement.enabled = false;
-        _continuousTurn.enabled = false;
-        _snapTurn.enabled = false;
+        _continuousTurn.turnSpeed = 0;
+        _snapTurn.turnAmount = 0;
+    }
+
+    public void SetTurnMode()
+    {
+        if (_currentProvider == TurningMode.Continuous)
+            _currentProvider = TurningMode.Snap;
+        else
+            _currentProvider = TurningMode.Continuous;
+
+        UIManager.Instance.SwitchTurnMode();
+    }
+
+    public void SetTurnSpeed(float speed)
+    {
+        _contTurnSpeed = speed;
+    }
+
+    public void SetTurnAmount(int degrees)
+    {
+        _snapTurnAmount = degrees;
     }
 
     private void SetChair()
