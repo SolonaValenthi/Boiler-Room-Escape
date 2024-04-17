@@ -29,6 +29,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] ActionBasedContinuousTurnProvider _continuousTurn;
     [SerializeField] ActionBasedSnapTurnProvider _snapTurn;
     [SerializeField] ActionBasedContinuousMoveProvider _continuousMovement;
+    [SerializeField] private GameObject _teleportArea;
 
     public enum TurningMode
     {
@@ -38,7 +39,9 @@ public class ScenarioManager : MonoBehaviour
 
     private int _nailsRemoved = 0;
     private bool _outageReady = true;
+    private bool _teleportOn = false;
     private float _contTurnSpeed = 60;
+    private float _movespeed = 1;
     private int _snapTurnAmount = 45;
     public TurningMode _currentProvider { get; private set; } = TurningMode.Continuous;
 
@@ -74,6 +77,8 @@ public class ScenarioManager : MonoBehaviour
     public void EnableMovement()
     {
         _continuousMovement.enabled = true;
+        _continuousMovement.moveSpeed = _movespeed;
+        _teleportArea.SetActive(_teleportOn);
 
         if (_currentProvider == TurningMode.Continuous)
         {
@@ -90,6 +95,7 @@ public class ScenarioManager : MonoBehaviour
     public void DisableMovement()
     {
         _continuousMovement.enabled = false;
+        _teleportArea.SetActive(false);
         _continuousTurn.turnSpeed = 0;
         _snapTurn.turnAmount = 0;
     }
@@ -112,6 +118,17 @@ public class ScenarioManager : MonoBehaviour
     public void SetTurnAmount(int degrees)
     {
         _snapTurnAmount = degrees;
+    }
+
+    public void SetMoveSpeed(float speed)
+    {
+        _movespeed = speed;
+    }
+
+    public void SetTeleport()
+    {
+        _teleportOn = !_teleportOn;
+        UIManager.Instance.SetTeleport(_teleportOn);
     }
 
     private void SetChair()

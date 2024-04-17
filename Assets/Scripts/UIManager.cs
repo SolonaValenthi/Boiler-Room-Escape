@@ -28,8 +28,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _snapTurnSettings;
     [SerializeField] private TMP_Text _turnMode;
     [SerializeField] private TMP_Text _contTurnSpeed;
+    [SerializeField] private TMP_Text _moveSpeed;
+    [SerializeField] private TMP_Text _teleportText;
+    [SerializeField] private TMP_Text _teleButtonText;
     [SerializeField] private Slider _speedSlider;
     [SerializeField] private TMP_Dropdown _amountDropdown;
+    [SerializeField] private Slider _moveSlider;
 
     private bool _menuOpen = false;
     
@@ -107,6 +111,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SetMoveSpeed()
+    {
+        _moveSpeed.text = $"{Mathf.Round(_moveSlider.value * 10) / 10 }";
+        ScenarioManager.Instance.SetMoveSpeed(_moveSlider.value);
+    }
+
     public void SetTurnSpeed()
     {
         _contTurnSpeed.text = $"{_speedSlider.value}";
@@ -138,6 +148,22 @@ public class UIManager : MonoBehaviour
             default:
                 Debug.LogError("Invalid dropdown item selected");
                 break;
+        }
+    }
+
+    public void SetTeleport(bool enabled)
+    {
+        if (enabled)
+        {
+            _teleportText.text = "ENABLED";
+            _teleButtonText.text = "Disable";
+            _teleportText.color = Color.green;
+        }
+        else
+        {
+            _teleportText.text = "DISABLED";
+            _teleButtonText.text = "Enable";
+            _teleportText.color = Color.red;
         }
     }
 
