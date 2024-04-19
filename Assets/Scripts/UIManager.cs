@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,10 +19,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    [Header("Menu")]
     [SerializeField] InputActionReference _openMenu;
     [SerializeField] private GameObject _menuCanvas;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject[] _menuInteractors;
+
+    [Space]
+    [Header("Motion")]
     [SerializeField] private GameObject _contTurnSettings;
     [SerializeField] private GameObject _snapTurnSettings;
     [SerializeField] private TMP_Text _turnMode;
@@ -34,6 +37,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _speedSlider;
     [SerializeField] private TMP_Dropdown _amountDropdown;
     [SerializeField] private Slider _moveSlider;
+
+    [Space]
+    [Header("Interaction")]
+    [SerializeField] private Slider _raySlider;
+    [SerializeField] private TMP_Text _rayText;
+    [SerializeField] private TMP_Text _rayButtonText;
+    [SerializeField] private TMP_Text _rayRange;
 
     private bool _menuOpen = false;
     
@@ -86,6 +96,7 @@ public class UIManager : MonoBehaviour
     public void CloseMenu()
     {
         ScenarioManager.Instance.EnableMovement();
+        ScenarioManager.Instance.EnableRays();
         _menuOpen = false;
         _menuCanvas.SetActive(false);
 
@@ -151,6 +162,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SetRayRange()
+    {
+        _rayRange.text = $"{Mathf.Round(_raySlider.value * 10) / 10}";
+        ScenarioManager.Instance.SetRayRange(_raySlider.value);
+    }
+
     public void SetTeleport(bool enabled)
     {
         if (enabled)
@@ -164,6 +181,22 @@ public class UIManager : MonoBehaviour
             _teleportText.text = "DISABLED";
             _teleButtonText.text = "Enable";
             _teleportText.color = Color.red;
+        }
+    }
+
+    public void SetRays(bool enabled)
+    {
+        if (enabled)
+        {
+            _rayText.text = "ENABLED";
+            _rayButtonText.text = "Disable";
+            _rayText.color = Color.green;
+        }
+        else
+        {
+            _rayText.text = "DISABLED";
+            _rayButtonText.text = "Enable";
+            _rayText.color = Color.red;
         }
     }
 

@@ -22,6 +22,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] UnityEvent _incorrectCombination;
 
     [SerializeField] private Transform _chair;
+    [SerializeField] GameObject[] _rayInteractors;
 
     [Space]
     [Header("Movement Providers")]
@@ -40,9 +41,11 @@ public class ScenarioManager : MonoBehaviour
     private int _nailsRemoved = 0;
     private bool _outageReady = true;
     private bool _teleportOn = false;
+    private bool _raysOn = false;
     private float _contTurnSpeed = 60;
     private float _movespeed = 1;
     private int _snapTurnAmount = 45;
+    private float _rayRange = 0.3f;
     public TurningMode _currentProvider { get; private set; } = TurningMode.Continuous;
 
     private void Awake()
@@ -54,6 +57,7 @@ public class ScenarioManager : MonoBehaviour
     void Start()
     {
         EnableMovement();
+        EnableRays();
     }
 
     public void RemoveNail()
@@ -92,6 +96,16 @@ public class ScenarioManager : MonoBehaviour
         }
     }
 
+    public void EnableRays()
+    {
+        foreach (var ray in _rayInteractors)
+        {
+            XRRayInteractor interactor = ray.GetComponent<XRRayInteractor>();
+            ray.SetActive(_raysOn);
+            interactor.maxRaycastDistance = _rayRange;
+        }
+    }
+
     public void DisableMovement()
     {
         _continuousMovement.enabled = false;
@@ -125,10 +139,21 @@ public class ScenarioManager : MonoBehaviour
         _movespeed = speed;
     }
 
+    public void SetRayRange(float range)
+    {
+        _rayRange = range;
+    }
+
     public void SetTeleport()
     {
         _teleportOn = !_teleportOn;
         UIManager.Instance.SetTeleport(_teleportOn);
+    }
+
+    public void SetRays()
+    {
+        _raysOn = !_raysOn;
+        UIManager.Instance.SetRays(_raysOn);
     }
 
     private void SetChair()
