@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] InputActionReference _openMenu;
     [SerializeField] private GameObject _menuCanvas;
     [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _movementMenu;
+    [SerializeField] private GameObject _interactionMenu;
+    [SerializeField] private GameObject _backButton;
     [SerializeField] private GameObject[] _menuInteractors;
 
     [Space]
@@ -99,11 +102,36 @@ public class UIManager : MonoBehaviour
         ScenarioManager.Instance.EnableRays();
         _menuOpen = false;
         _menuCanvas.SetActive(false);
+        _interactionMenu.SetActive(false);
+        _movementMenu.SetActive(false);
+        _backButton.SetActive(false);
 
         foreach (var interactor in _menuInteractors)
         {
             interactor.SetActive(false);
         }
+    }
+
+    public void BackButton()
+    {
+        _interactionMenu.SetActive(false);
+        _movementMenu.SetActive(false);
+        _backButton.SetActive(false);
+        _mainMenu.SetActive(true);
+    }
+
+    public void MovementSettings()
+    {
+        _movementMenu.SetActive(true);
+        _backButton.SetActive(true);
+        _mainMenu.SetActive(false);
+    }
+
+    public void InteractionSettings()
+    {
+        _interactionMenu.SetActive(true);
+        _backButton.SetActive(true);
+        _mainMenu.SetActive(false);
     }
 
     public void SwitchTurnMode()
