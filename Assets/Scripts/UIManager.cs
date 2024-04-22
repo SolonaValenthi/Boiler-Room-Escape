@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _movementMenu;
     [SerializeField] private GameObject _interactionMenu;
+    [SerializeField] private GameObject _audioMenu;
     [SerializeField] private GameObject _backButton;
     [SerializeField] private GameObject[] _menuInteractors;
 
@@ -47,6 +48,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _rayText;
     [SerializeField] private TMP_Text _rayButtonText;
     [SerializeField] private TMP_Text _rayRange;
+
+    [Space]
+    [Header("Audio")]
+    [SerializeField] private Slider[] _volumeSliders;
+    [SerializeField] private TMP_Text[] _volumeValues;
 
     private bool _menuOpen = false;
     
@@ -104,6 +110,7 @@ public class UIManager : MonoBehaviour
         _menuCanvas.SetActive(false);
         _interactionMenu.SetActive(false);
         _movementMenu.SetActive(false);
+        _audioMenu.SetActive(false);
         _backButton.SetActive(false);
 
         foreach (var interactor in _menuInteractors)
@@ -116,6 +123,7 @@ public class UIManager : MonoBehaviour
     {
         _interactionMenu.SetActive(false);
         _movementMenu.SetActive(false);
+        _audioMenu.SetActive(false);
         _backButton.SetActive(false);
         _mainMenu.SetActive(true);
     }
@@ -130,6 +138,13 @@ public class UIManager : MonoBehaviour
     public void InteractionSettings()
     {
         _interactionMenu.SetActive(true);
+        _backButton.SetActive(true);
+        _mainMenu.SetActive(false);
+    }
+
+    public void AudioSettings()
+    {
+        _audioMenu.SetActive(true);
         _backButton.SetActive(true);
         _mainMenu.SetActive(false);
     }
@@ -194,6 +209,14 @@ public class UIManager : MonoBehaviour
     {
         _rayRange.text = $"{Mathf.Round(_raySlider.value * 10) / 10}";
         ScenarioManager.Instance.SetRayRange(_raySlider.value);
+    }
+
+    public void SetVolume(int ID)
+    {
+        // set correct ID within inspecter 0 = master, 1 = ambience, 2 = interface
+
+        _volumeValues[ID].text = $"{_volumeSliders[ID].value}";
+        ScenarioManager.Instance.SetVolume(ID, _volumeSliders[ID].value / 100);
     }
 
     public void SetTeleport(bool enabled)

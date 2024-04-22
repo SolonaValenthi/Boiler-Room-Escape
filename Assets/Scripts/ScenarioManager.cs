@@ -32,6 +32,11 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] ActionBasedContinuousMoveProvider _continuousMovement;
     [SerializeField] private GameObject _teleportArea;
 
+    [Space]
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource _ambientAudio;
+    [SerializeField] private AudioSource _uiAudio;
+
     public enum TurningMode
     {
         Continuous,
@@ -46,6 +51,10 @@ public class ScenarioManager : MonoBehaviour
     private float _movespeed = 1;
     private int _snapTurnAmount = 45;
     private float _rayRange = 0.3f;
+    private float _masterVolume = 0.7f;
+    private float _ambientVolume = 0.7f;
+    private float _uiVolume = 0.7f;
+
     public TurningMode _currentProvider { get; private set; } = TurningMode.Continuous;
 
     private void Awake()
@@ -154,6 +163,29 @@ public class ScenarioManager : MonoBehaviour
     {
         _raysOn = !_raysOn;
         UIManager.Instance.SetRays(_raysOn);
+    }
+
+    public void SetVolume(int ID, float volume)
+    {
+        switch (ID)
+        {
+            case 0:
+                _masterVolume = volume;
+                _ambientAudio.volume = _ambientVolume * _masterVolume;
+                _uiAudio.volume = _uiVolume * _masterVolume;
+                break;
+            case 1:
+                _ambientVolume = volume;
+                _ambientAudio.volume = _ambientVolume * _masterVolume;
+                break;
+            case 2:
+                _uiVolume = volume;
+                _uiAudio.volume = _uiVolume * _masterVolume;
+                break;
+            default:
+                Debug.LogError("Invalid source ID");
+                break;
+        }
     }
 
     private void SetChair()
