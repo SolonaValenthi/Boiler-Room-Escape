@@ -30,6 +30,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject[] _menuInteractors;
 
     [Space]
+    [Header("Tutorial")]
+    [SerializeField] private GameObject _tutorial;
+    [SerializeField] private GameObject[] _pages;
+    [SerializeField] private GameObject _prevButton;
+    [SerializeField] private GameObject _nextButton;
+    [SerializeField] private GameObject _startButton;
+
+    [Space]
     [Header("Motion")]
     [SerializeField] private GameObject _contTurnSettings;
     [SerializeField] private GameObject _snapTurnSettings;
@@ -54,7 +62,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider[] _volumeSliders;
     [SerializeField] private TMP_Text[] _volumeValues;
 
-    private bool _menuOpen = false;
+    private bool _menuOpen = true;
+    private int _currentPage = 1;
     
     private void Awake()
     {
@@ -64,12 +73,9 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _menuOpen = false;
-        _menuCanvas.SetActive(false);
-
         foreach (var interactor in _menuInteractors)
         {
-            interactor.SetActive(false);
+            interactor.SetActive(true);
         }
     }
 
@@ -79,6 +85,43 @@ public class UIManager : MonoBehaviour
 
         if (openMenuAction != null)
             openMenuAction.performed += OpenMenu;
+    }
+
+    public void CloseTutorial()
+    {
+        _tutorial.SetActive(false);
+        CloseMenu();
+    }
+
+    public void NextPage()
+    {
+        _pages[_currentPage - 1].SetActive(false);
+        _currentPage++;
+        _pages[_currentPage - 1].SetActive(true);
+
+        if (_currentPage == 6)
+        {
+            _nextButton.SetActive(false);
+            _startButton.SetActive(true);
+        }
+    }
+
+    public void PrevPage()
+    {
+        _pages[_currentPage - 1].SetActive(false);
+        _currentPage--;
+        _pages[_currentPage - 1].SetActive(true);
+
+        if (_currentPage == 1)
+        {
+            _prevButton.SetActive(false);
+            _nextButton.SetActive(false);
+        }
+        else if (_currentPage < 6)
+        {
+            _nextButton.SetActive(true);
+            _startButton.SetActive(false);
+        }
     }
 
     private void OpenMenu(InputAction.CallbackContext context)

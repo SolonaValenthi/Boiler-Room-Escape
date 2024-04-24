@@ -65,7 +65,7 @@ public class ScenarioManager : MonoBehaviour
 
     void Start()
     {
-        EnableMovement();
+        DisableMovement();
         EnableRays();
     }
 
