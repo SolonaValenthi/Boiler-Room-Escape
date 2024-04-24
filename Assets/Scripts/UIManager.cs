@@ -128,25 +128,27 @@ public class UIManager : MonoBehaviour
         _mainMenu.SetActive(true);
     }
 
-    public void MovementSettings()
+    // Set the correct ID within the inspector 0 = movement, 1 = interaction, 2 = audio
+    public void OpenSubMenu(int ID)
     {
-        _movementMenu.SetActive(true);
         _backButton.SetActive(true);
         _mainMenu.SetActive(false);
-    }
 
-    public void InteractionSettings()
-    {
-        _interactionMenu.SetActive(true);
-        _backButton.SetActive(true);
-        _mainMenu.SetActive(false);
-    }
-
-    public void AudioSettings()
-    {
-        _audioMenu.SetActive(true);
-        _backButton.SetActive(true);
-        _mainMenu.SetActive(false);
+        switch (ID)
+        {
+            case 0:
+                _movementMenu.SetActive(true);
+                break;
+            case 1:
+                _interactionMenu.SetActive(true);
+                break;
+            case 2:
+                _audioMenu.SetActive(true);
+                break;
+            default:
+                Debug.LogError("Invalid ID detected.");
+                break;
+        }
     }
 
     public void SwitchTurnMode()
@@ -211,10 +213,9 @@ public class UIManager : MonoBehaviour
         ScenarioManager.Instance.SetRayRange(_raySlider.value);
     }
 
+    // set correct ID within inspecter 0 = master, 1 = ambience, 2 = interface
     public void SetVolume(int ID)
     {
-        // set correct ID within inspecter 0 = master, 1 = ambience, 2 = interface
-
         _volumeValues[ID].text = $"{_volumeSliders[ID].value}";
         ScenarioManager.Instance.SetVolume(ID, _volumeSliders[ID].value / 100);
     }
