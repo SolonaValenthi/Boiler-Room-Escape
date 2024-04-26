@@ -62,6 +62,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider[] _volumeSliders;
     [SerializeField] private TMP_Text[] _volumeValues;
 
+    [Space]
+    [Header("Victory")]
+    [SerializeField] private GameObject _victoryCanvas;
+    [SerializeField] private TMP_Text _runTime;
+
     private bool _menuOpen = true;
     private int _currentPage = 1;
     
@@ -194,6 +199,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void CompletionTime(int minutes, int seconds)
+    {
+        StartCoroutine(VictoryDelay());
+        _runTime.text = $"{minutes} minutes {seconds} seconds";
+    }
+
     public void SwitchTurnMode()
     {
         if (ScenarioManager.Instance._currentProvider == ScenarioManager.TurningMode.Continuous)
@@ -292,6 +303,17 @@ public class UIManager : MonoBehaviour
             _rayText.text = "DISABLED";
             _rayButtonText.text = "Enable";
             _rayText.color = Color.red;
+        }
+    }
+
+    IEnumerator VictoryDelay()
+    {
+        yield return new WaitForSeconds(2);
+        _victoryCanvas.SetActive(true);
+
+        foreach (var interactor in _menuInteractors)
+        {
+            interactor.SetActive(true);
         }
     }
 

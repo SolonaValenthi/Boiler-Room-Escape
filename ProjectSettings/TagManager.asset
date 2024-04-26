@@ -39,7 +39,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Player Stop
   - Teleportation
   m_SortingLayers:
   - name: Default

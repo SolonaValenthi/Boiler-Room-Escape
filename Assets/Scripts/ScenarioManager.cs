@@ -55,6 +55,7 @@ public class ScenarioManager : MonoBehaviour
     private float _masterVolume = 0.7f;
     private float _ambientVolume = 0.7f;
     private float _uiVolume = 0.7f;
+    private int _timeStarted = 0;
 
     public TurningMode _currentProvider { get; private set; } = TurningMode.Continuous;
 
@@ -70,6 +71,21 @@ public class ScenarioManager : MonoBehaviour
         EnableRays();
     }
 
+    public void StartRun()
+    {
+        if (_timeStarted == 0)
+            _timeStarted = Mathf.RoundToInt(Time.time);
+    }
+
+    public void Victory()
+    {
+        int completionTime = Mathf.RoundToInt(Time.time);
+        int runTime = completionTime - _timeStarted;
+        int seconds = runTime % 60;
+        int minutes = (runTime - seconds) / 60;
+        UIManager.Instance.CompletionTime(minutes, seconds);
+    }
+    
     public void ResetRoom()
     {
         SceneManager.LoadScene(0);
@@ -78,7 +94,6 @@ public class ScenarioManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("quit game button pressed");
     }
     
     public void RemoveNail()
