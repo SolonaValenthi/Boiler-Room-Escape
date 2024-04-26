@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class ScenarioManager : MonoBehaviour
@@ -69,6 +70,17 @@ public class ScenarioManager : MonoBehaviour
         EnableRays();
     }
 
+    public void ResetRoom()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("quit game button pressed");
+    }
+    
     public void RemoveNail()
     {
         _nailsRemoved++;

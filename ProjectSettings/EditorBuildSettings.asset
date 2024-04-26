@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/TheBoilerDemo.unity
+    guid: 84468e41ffe83b14094d501a6d6dd037
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 90889447449d65d4a86d053120ee7710,
       type: 2}
