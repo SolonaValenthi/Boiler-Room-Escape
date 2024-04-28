@@ -9968,7 +9968,7 @@ GameObject:
   - component: {fileID: 525488821}
   - component: {fileID: 525488820}
   - component: {fileID: 525488819}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Victory_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10071,7 +10071,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 611723565}
+  m_Camera: {fileID: 2032338844}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -12416,7 +12416,7 @@ GameObject:
   - component: {fileID: 617289961}
   - component: {fileID: 617289963}
   - component: {fileID: 617289962}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Time_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13319,7 +13319,7 @@ GameObject:
   - component: {fileID: 657715455}
   - component: {fileID: 657715457}
   - component: {fileID: 657715456}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Time_To_Complete_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13453,7 +13453,7 @@ GameObject:
   - component: {fileID: 660529829}
   - component: {fileID: 660529831}
   - component: {fileID: 660529830}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35067,7 +35067,7 @@ GameObject:
   - component: {fileID: 1497917397}
   - component: {fileID: 1497917399}
   - component: {fileID: 1497917398}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Main_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36883,7 +36883,7 @@ GameObject:
   - component: {fileID: 1538174306}
   - component: {fileID: 1538174308}
   - component: {fileID: 1538174307}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Congratulations_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41034,7 +41034,7 @@ GameObject:
   - component: {fileID: 1762487610}
   - component: {fileID: 1762487612}
   - component: {fileID: 1762487611}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Thanky_You_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}

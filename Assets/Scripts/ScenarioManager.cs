@@ -45,17 +45,17 @@ public class ScenarioManager : MonoBehaviour
     }
 
     private int _nailsRemoved = 0;
+    private int _snapTurnAmount = 45;
+    private int _timeStarted = 0;
     private bool _outageReady = true;
     private bool _teleportOn = false;
     private bool _raysOn = false;
     private float _contTurnSpeed = 60;
     private float _movespeed = 1;
-    private int _snapTurnAmount = 45;
     private float _rayRange = 0.3f;
     private float _masterVolume = 0.7f;
     private float _ambientVolume = 0.7f;
     private float _uiVolume = 0.7f;
-    private int _timeStarted = 0;
 
     public TurningMode _currentProvider { get; private set; } = TurningMode.Continuous;
 
@@ -79,6 +79,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void Victory()
     {
+        DisableMovement();
         int completionTime = Mathf.RoundToInt(Time.time);
         int runTime = completionTime - _timeStarted;
         int seconds = runTime % 60;

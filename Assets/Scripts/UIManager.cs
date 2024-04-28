@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
         _currentPage++;
         _pages[_currentPage - 1].SetActive(true);
 
-        if (_currentPage == 6)
+        if (_currentPage == _pages.Length)
         {
             _nextButton.SetActive(false);
             _startButton.SetActive(true);
@@ -122,7 +122,7 @@ public class UIManager : MonoBehaviour
             _prevButton.SetActive(false);
             _nextButton.SetActive(false);
         }
-        else if (_currentPage < 6)
+        else if (_currentPage < _pages.Length)
         {
             _nextButton.SetActive(true);
             _startButton.SetActive(false);
@@ -132,9 +132,7 @@ public class UIManager : MonoBehaviour
     private void OpenMenu(InputAction.CallbackContext context)
     {
         if (!_menuOpen)
-        {
             DisplayMenu();
-        }
     }
 
     private void DisplayMenu()
