@@ -86,10 +86,10 @@ public class ScenarioManager : MonoBehaviour
         int minutes = (runTime - seconds) / 60;
         UIManager.Instance.CompletionTime(minutes, seconds);
     }
-    
+
     public void ResetRoom()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadSceneAsync(0);
     }
 
     public void QuitGame()
@@ -117,7 +117,6 @@ public class ScenarioManager : MonoBehaviour
 
     public void EnableMovement()
     {
-        _continuousMovement.enabled = true;
         _continuousMovement.moveSpeed = _movespeed;
         _teleportArea.SetActive(_teleportOn);
 
@@ -145,7 +144,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void DisableMovement()
     {
-        _continuousMovement.enabled = false;
+        _continuousMovement.moveSpeed = 0;
         _teleportArea.SetActive(false);
         _continuousTurn.turnSpeed = 0;
         _snapTurn.turnAmount = 0;
